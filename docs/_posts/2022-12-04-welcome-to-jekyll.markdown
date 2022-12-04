@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
+title:  "Welcome to MY Blog!"
 date:   2022-12-04 19:44:59 +0800
 categories: jekyll update
 ---
