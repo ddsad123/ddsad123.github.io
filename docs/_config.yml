@@ -30,7 +30,7 @@ twitter_username: jekyllrb
 github_username:  ddsad123
 
 # Build settings
-theme: minima
+theme: time-machine
 plugins:
   - jekyll-feed
 
