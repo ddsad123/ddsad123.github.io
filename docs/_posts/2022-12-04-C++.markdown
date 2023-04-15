@@ -1,0 +1,17 @@
+---
+layout: post
+title:  "C++笔记"
+date:   2022-12-06 19:44:59 +0800
+categories: jekyll update
+---
+<h1> 类 </h1>
+
+<h1>模板</h1>
+
+<h1> 智能指针 </h1>
+C++11中提供了三种智能指针，使用这些智能指针时需要引用头文件<memory>。
+
+std::shared_ptr：共享的智能指针。
+std::unique_ptr：独占的智能指针。
+std::weak_ptr：弱引用的智能指针，它不共享指针，不能操作资源，是用来监视shared_ptr的。
+

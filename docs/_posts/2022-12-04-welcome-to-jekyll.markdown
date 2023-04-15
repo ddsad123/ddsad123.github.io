@@ -17,3 +17,12 @@ categories: jekyll update
 [安装Ubuntu]: https://www.roboxx.ltd/2104.html
 [常用安装软件方法]: https://zhuanlan.zhihu.com/p/144132093
 
+<h1>安装清单</h1>
+vscode：官网
+opencv：另一篇教程
+搜狗输入法：官网
+ros：自动安装
+openvino：阿囧版
+rustdesk：官网
+cmake：官网
+其他东西：qq，wps，MindMaster

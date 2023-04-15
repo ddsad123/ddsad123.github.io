@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<!-- <small>{{ page.date | date: "%-d %B %Y" }}</small>
+<small>{{ page.date | date: "%-d %B %Y" }}</small>
 <h1>{{ page.title }}</h1>
 <h2 class="post-list-heading">{{ post.list_title | default: "Posts" }}</h2>
 
@@ -12,9 +12,9 @@ layout: default
 
 {% if page.tags %}
   <small>tags: <em>{{ page.tags | join: "</em> - <em>" }}</em></small>
-{% endif %} -->
+{% endif %}
 
-<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+<!-- <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
     <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
@@ -44,4 +44,4 @@ layout: default
   </div>
 
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
-</article>
+</article> -->

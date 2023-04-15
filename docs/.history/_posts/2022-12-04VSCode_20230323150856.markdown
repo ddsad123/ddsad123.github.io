@@ -1,0 +1,31 @@
+---
+layout: post
+title:  "VSCode"
+date:   2022-12-06 19:44:59 +0800
+categories: jekyll update
+---
+<h1>VSCode配置C++</h1>
+<h2>四个文件<h2>
+
+
+<h3>c_cpp_properties.json<h3>
+
+`{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/local/include/",
+                "/usr/local/include/opencv4/",
+                "/usr/local/include/opencv4/opencv2/"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}`

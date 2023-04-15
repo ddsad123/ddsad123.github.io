@@ -1,0 +1,111 @@
+---
+layout: post
+title:  "VSCode"
+date:   2022-12-06 19:44:59 +0800
+categories: jekyll update
+---
+<h1>VSCode配置C++</h1>
+<h2>四个文件</h2>
+<h3>c_cpp_properties.json</h3>
+
+`{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+            "${workspaceFolder}/**",
+            "/usr/local/include/",
+            "/usr/local/include/opencv4/",
+            "/usr/local/include/opencv4/opencv2/"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}`
+<h3>launch.json</h3>
+
+`{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) Launch", /* 配置名称，将会在启动配置的下拉菜单中显示 */
+            "preLaunchTask": "build", /* 调试前执行 'build'选项 */
+	    //"preLaunchTask": "g++", /* 调试会话开始前执行的任务，一般为编译程序，c++为g++, c为gcc */
+            "type": "cppdbg", /* 配置类型，这里只能为cppdbg */
+            "request": "launch",/**/
+            "program": "${workspaceFolder}/${fileBasenameNoExtension}.o", /*选择要调试的文件路径*/
+            "args": [], /* 程序调试时传递给程序的命令行参数，一般设为空即可  */
+            "stopAtEntry": false,/* 设为true时程序将暂停在程序入口处，一般设置为false */
+            "cwd": "${workspaceFolder}", /* 调试程序时的工作目录，一般为${workspaceFolder}即代码所在目录 */
+            "environment": [],
+            "externalConsole": false, /* 调试时是否显示控制台窗口，一般设置为true显示控制台 */
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}`
+<h3>settings.json</h3>
+
+`{
+    "files.associations": {
+        "stdexcept": "cpp",
+        "*.ipp": "cpp",
+        "bitset": "cpp",
+        "ostream": "cpp",
+        "iostream": "cpp"
+    }
+}`
+<h3>tasks.json</h3>
+
+`{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",	/* 定义任务是被作为进程运行还是在 shell 中作为命令运行，默认是shell，即是在终端中运行，因为终端执行的就是shell的脚本 */
+			"label": "build",	/* 要与launch.json文件里的preLaunchTask的内容保持一致 */
+			"command": "/usr/bin/g++",	/* 这里填写你的编译器地址 */
+			"args": [
+				/* 类似与qt的Pro文件里开始的那几句 */
+				"-std=c++11",// 静态链接
+                "-static-libgcc",
+				"-Wall",// 开启额外警告	
+				/* 说明整个项目所需的头文件路径（.h）*/
+				"-I","${workspaceFolder}/",
+                "-I","/usr/local/include/",
+                "-I","/usr/local/include/opencv4/",
+                "-I","/usr/local/include/opencv4/opencv2/",	
+				/* 说明整个项目所需的源文件路径(.cpp) */
+				"-g",	
+                "${workspaceFolder}/${fileBasenameNoExtension}.cpp",/* ${workspaceFolder}表示路径从当前项目文件夹开始 */
+				"-o",	/* 编译输出文件的存放路径 */
+				"${fileBasenameNoExtension}.o", /* 要与launch.json文件里的program的内容保持一致 */
+				/* ${fileDirname} 是指 文件目录名 相当于${workspaceFolder}*/
+				/* ${fileBasenameNoExtension}意思是指 该路径下没有扩展名的文件基本名称没有扩展名 */ 
+				/* 也可以这样："${workspaceFolder}/run.o", */
+				/* OpenCV的lib库 */
+				"/usr/local/lib/libopencv_*",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"	/* 调试程序时的工作目录，一般为${workspaceFolder}即代码所在目录 */
+			},
+			"problemMatcher": [
+				"$gcc"	/* 要使用的问题匹配程序。 */
+			],
+			"group": "build" /* 将任务标记为可通过 "运行生成任务" 命令访问的生成任务。*/
+		}
+	]
+}`
