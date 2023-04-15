@@ -9,7 +9,7 @@ categories: jekyll update
 <h1>模板</h1>
 
 <h1> 智能指针 </h1>
-C++11中提供了三种智能指针，使用这些智能指针时需要引用头文件<memory>。
+C++11中提供了三种智能指针，使用这些智能指针时需要引用头文件< memory >。
 
 std::shared_ptr：共享的智能指针。
 std::unique_ptr：独占的智能指针。

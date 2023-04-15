@@ -1,0 +1,6 @@
+- name: Home
+  link: /
+- name: About
+  link: /jekyll/update/2022/12/06/OpenCV.html
+- name: post
+  link: /post.html

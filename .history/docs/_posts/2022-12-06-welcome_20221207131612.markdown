@@ -1,0 +1,16 @@
+---
+layout: post
+title:  "Opencv"
+date:   2022-12-06 19:44:59 +0800
+categories: jekyll update
+---
+<h1>安装OpenCV</h1>
+<h2>下载OpenCV</h2>
+由于官网太慢，推荐下载国内源：
+
+[国内快速下载地址]
+打开你下载OpenCV的文件夹，双击文件提取即可。
+或者用指令：
+`unzip`
+
+[国内快速下载地址]: https://www.raoyunsoft.com/wordpress/index.php/2020/03/09/opencvdownload/
