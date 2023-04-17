@@ -6,12 +6,48 @@ categories: jekyll update
 ---
 <h1>安装OpenCV</h1>
 <h2>下载OpenCV</h2>
-由于官网太慢，推荐下载国内源：
+由于官网太慢，推荐下载国内源(建议下4.5左右版本)：
 
 [国内快速下载地址]
 
 打开你下载OpenCV的文件夹，双击文件提取即可。
 或者用指令：
 `unzip`
+
+## 安装编译
+终端进入到opencv的目录中
+`cd opencv-版本`
+![进入opencv的目录](../_posts/cdopencv.png "cd_opencv")
+如上图一般位置在：下载/opencv-版本
+进入root并更新
+`sudo su`
+`sudo apt-get update`
+安装cmake建议取官网新版，投机取巧如下：
+`sudo apt-get install cmake`
+安装opencv的依赖
+`sudo apt-get install build-essential libgtk2.0-dev libavcodec-dev libavformat-dev libjpeg.dev libtiff5.dev libswscale-dev`
+创建 build 文件夹并进入，使用 cmake 编译参数
+`cmake ..`
+用make创建编译
+`sudo make`
+如果觉得太慢4线程命令如下
+`sudo make -j4` 
+安装
+`sudo make install`
+修改文件
+`sudo gedit /etc/ld.so.conf.d/opencv.conf`
+ 更新系统共享链接库
+`sudo ldconfig`
+配置bash
+`sudo gedit /etc/bash.bashrc`
+在文件末尾加入：
+`PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig`
+`export PKG_CONFIG_PATH`
+保存退出，然后执行如下命令使得配置生效
+`source /etc/bash.bashrc`
+更新
+`sudo updatedb`
+查看版本可以省略
+`pkg-config --modversion opencv`
 
 [国内快速下载地址]: https://www.raoyunsoft.com/wordpress/index.php/2020/03/09/opencvdownload/
