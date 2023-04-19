@@ -4,9 +4,13 @@ title:  "VSCode"
 date:   2023-3-6 19:44:59 +0800
 categories: jekyll update
 ---
-<h1>VSCode配置C++</h1>
-<h2>四个文件</h2>
-<h3>c_cpp_properties.json</h3>
+
+* content
+{:toc}
+
+# VSCode配置C++
+## 四个文件 
+### c_cpp_properties.json 
 
 ```{
     "configurations": [
@@ -28,7 +32,7 @@ categories: jekyll update
     "version": 4
 }
 ```
-<h3>launch.json</h3>
+### launch.json 
 
 ```{
 
@@ -59,7 +63,7 @@ categories: jekyll update
 }
 ```
 
-<h3>settings.json</h3>
+### settings.json
 
 ```{
     "files.associations": {
@@ -71,7 +75,7 @@ categories: jekyll update
     }
 }
 ```
-<h3>tasks.json</h3>
+### tasks.json 
 ```
 {
 	"version": "2.0.0",
@@ -113,10 +117,10 @@ categories: jekyll update
 }
 ```
 
-<h1>cmake </h1>
-<h2>如何安装cmake</h2>
+# cmake  
+## 如何安装cmake 
 
-<h1>扩展</h1>
+# 扩展 
 1：Remote-SSH，Remote Explorer
 2：C/C++
 3：设置中文——Chinese

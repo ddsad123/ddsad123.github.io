@@ -4,7 +4,11 @@ title:  "Opencv"
 date:   2022-12-06 19:44:59 +0800
 categories: jekyll update
 ---
-<h1>安装OpenCV</h1>
+
+* content
+{:toc}
+
+# 安装OpenCV
 <h2>下载OpenCV</h2>
 由于官网太慢，推荐下载国内源(建议下4.5左右版本)：
 
@@ -16,8 +20,9 @@ categories: jekyll update
 
 ## 安装编译
 终端进入到opencv的目录中
+
 `cd opencv-版本`
-![进入opencv的目录](../_posts/cdopencv.png "cd_opencv")
+![进入opencv的目录](https://github.com/ddsad123/img/blob/main/cdopencv.png?raw=true "cd_opencv")
 如上图一般位置在：下载/opencv-版本
 进入root并更新
 `sudo su`
@@ -51,3 +56,155 @@ categories: jekyll update
 `pkg-config --modversion opencv`
 
 [国内快速下载地址]: https://www.raoyunsoft.com/wordpress/index.php/2020/03/09/opencvdownload/
+
+page...1
+# 队内赛识别绿灯
+```
+#include<opencv2/highgui/highgui.hpp>
+
+#include<opencv2/highgui/highgui_c.h>
+
+#include<opencv2/imgproc/imgproc.hpp>
+
+#include<iostream>
+
+using namespace cv;
+
+using namespace std;
+
+void Pickupgreen(Mat& inputframe, Mat& outputframe);
+
+void balance(Mat& inputframe ,Mat& outputframe);
+
+int PixelCounter(Mat src, int nflag)
+{
+
+	int nCount_White = 0;//白
+	//通过迭代器访问图像的像素点
+	Mat_<uchar>::iterator itor = src.begin<uchar>();
+	Mat_<uchar>::iterator itorEnd = src.end<uchar>();
+	for (; itor != itorEnd; ++itor)
+	{
+		if ((*itor) > 0)
+		{
+			nCount_White += 1;
+		}
+	}
+		return nCount_White;
+	}
+int main()
+{
+VideoCapture capture(0);
+while (1)
+{
+Mat frame,bframe;
+Mat greenframe;
+capture >> frame;
+//balance (bframe,frame);
+imshow("读取视频", frame);
+Mat midframe;
+Pickupgreen(frame, greenframe);
+cvtColor(greenframe,midframe, COLOR_BGR2GRAY);
+blur( midframe, midframe, Size(7, 7));
+Canny(midframe,midframe,0,30,3);
+
+vector<Vec3f> circles;
+HoughCircles( midframe, circles, HOUGH_GRADIENT,2,5,200,400,0,0 );
+for( size_t i = 0; i < circles.size(); i++ )
+{
+Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
+int radius = cvRound(circles[i][2]);
+circle( midframe, center, 3, Scalar(0,255,0), -1, 8, 0 );
+circle( midframe, center, radius, Scalar(155,50,255), 3, 8, 0 );
+/*Mat halfmid1,halfmid2,circle1;
+ circle1=midframe;
+ circle1=midframe;
+  halfmid1=greenframe(Range(circles[i][1] ,circles[i][1]+radius),Range(circles[i][0]-radius,circles[i][0]));
+halfmid2=greenframe(Range(circles[i][1] ,circles[i][1]+radius),Range(circles[i][0],circles[i][0]+radius)); 
+   halfmid1=circle1(Range(circles[i][1] ,circles[i][1]+radius),Range(circles[i][0]-radius,circles[i][0]));
+halfmid2=circle1(Range(circles[i][1] ,circles[i][1]+radius),Range(circles[i][0],circles[i][0]+radius)); 
+ 
+int nWhiteCount1 = PixelCounter(halfmid1, 1);
+int nWhiteCount2 = PixelCounter(halfmid2, 1);
+cout<<nWhiteCount1<<endl;
+cout<<nWhiteCount2<<endl;*/
+cout<<1;
+}
+imshow("1",midframe);
+waitKey(10);
+}
+}
+//imshow("视频", greenframe);
+ /*{
+	 Mat img=imread("right.png");
+	 Mat outimg;
+	 	threshold(img, outimg, 224, 255, CV_THRESH_BINARY);
+	 Mat Limg= outimg (Range::all(),Range(0,img.cols/2));
+	 Mat Rimg= outimg(Range::all(),Range(img.cols/2,img.cols));
+	 int nWhiteCountL = PixelCounter(Limg, 1);
+	 int nWhiteCountR = PixelCounter(Rimg, 1);
+	 imshow("1",Limg);
+	 imshow("2",Rimg);
+   
+	 cout<<nWhiteCountL<<endl<<nWhiteCountR;
+	 
+	 waitKey(0);
+ }*/
+void Pickupgreen(Mat& inputframe, Mat& outputframe)
+{
+Mat hsvframe;
+cvtColor(inputframe, hsvframe, COLOR_BGR2HSV);
+outputframe = Mat(hsvframe.rows, hsvframe.cols, CV_8UC3, cv::Scalar(255, 255, 255));
+int rowNumber = hsvframe.rows;
+int colNumber = hsvframe.cols;
+double H = 0.0, S = 0.0, V = 0.0;
+for (int i = 0; i < rowNumber; i++)
+{
+for (int j = 0; j < colNumber; j++)
+{
+H = hsvframe.at<Vec3b>(i, j)[0];
+S = hsvframe.at<Vec3b>(i, j)[1];
+V = hsvframe.at<Vec3b>(i, j)[2];
+if ((H >= 45 && H <= 130) && S >= 43 && V >= 46)
+{
+outputframe.at<Vec3b>(i, j)[0] = inputframe.at<Vec3b>(i, j)[0];
+outputframe.at<Vec3b>(i, j)[1] = inputframe.at<Vec3b>(i, j)[1];
+outputframe.at<Vec3b>(i, j)[2] = inputframe.at<Vec3b>(i, j)[2];
+}
+}
+}
+}
+
+// void balance(Mat& inputframe,Mat& outputframe)
+// {
+// 	Mat imageSource ;
+	
+// 	vector<Mat> imageRGB;
+ 
+// /RGB三通道分离
+// 	split(inputframe, imageRGB);
+ 
+// 	求原始图像的RGB分量的均值
+
+// 	double R, G, B;
+// 	B = mean(imageRGB[0])[0];
+// 	G = mean(imageRGB[1])[0];
+// 	R = mean(imageRGB[2])[0];
+ 
+// 	需要调整的RGB分量的增益
+// 	double KR, KG, KB;
+// 	KB = (R + G + B) / (3 * B);
+// 	KG = (R + G + B) / (3 * G);
+// 	KR = (R + G + B) / (3 * R);
+ 
+// 	调整RGB三个通道各自的值
+// 	imageRGB[0] = imageRGB[0] * KB;
+// 	imageRGB[1] = imageRGB[1] * KG;
+// 	imageRGB[2] = imageRGB[2] * KR;
+ 
+// 	RGB三通道图像合并
+// 	merge(imageRGB, inputframe);
+//     outputframe=inputframe;
+// }
+
+```
