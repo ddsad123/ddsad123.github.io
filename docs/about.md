@@ -1,11 +1,5 @@
 ---
-layout: post
-title: About site
+title: "About"
+layout: about
 ---
 
-* content
-{:toc}
-
-## Introduction
-
-some description...
