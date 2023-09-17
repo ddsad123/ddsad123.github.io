@@ -8,3 +8,31 @@ categories: jekyll update
 * content
 {:toc}
 
+# 名词
+## costmap（代价地图）
+由SLAM算法生成栅格地图。我们为栅格地图中的每一个栅格分配一个代价值，这样就形成了costmap。路径规划算法则可以在具有代价的栅格地图上生成路径。规划路径的生成则是强依赖于代价值。
+### ros1&ros2区别
+ROS1中的costmap_2d功能包和ROS2中的基本一致。算法流程架构没有太多变化。但是ROS2中的costmap_2d功能包增加了CostmapFilter模块，可以方便实现虚拟墙和速度限制区等功能。
+## Nav2
+Nav2是ROS导航（Navigation）软件堆栈的精神继任者，旨在寻找一种安全的方式让移动机器人从A点移动到B点。它也可以应用于其他涉及机器人导航的应用，例如跟路点跟踪。为此，Nav2将会完成动态路径规划、计算电机速度、避开障碍物和结构恢复行为。Nav2使用行为树（BT，Behavior Trees）调用模块化服务器来完成一个动作。动作可以是计算路径、控制工作（control efforts）、恢复或任何其他与导航相关的动作。这些都是通过ROS动作服务器与行为树（BT）进行通信的独立节点12.
+# 一些函数
+## initialize函数
+它调用onInitialize函数，分别对各costmap层进行初始化；
+
+## matchSize函数
+在StaticLayer类和ObstacleLayer类中，该函数调用了CostmapLayer类的matchSize函数，初始化各costmap层的size，分辨率，原点和默认代价值，并保持与layered_costmap一致。对于inflationLayer类，根据膨胀半径计算了随距离变化的cost表。后面就可以用距离来查询膨胀栅格的cost值。同时定义了seen_数组，该数组用于标记栅格是否已经被遍历过。对于VoxelLayer类，则初始化了体素方格的size；
+
+## updateBounds函数
+调整当前costmap层需要更新的大小范围。对于StaticLayer类，确定costmap的更新范围为静态地图的大小（注意：静态层一般只用在全局costmap中。）。对于ObstacleLayer类，遍历clearing_observations中的传感器数据，确定障碍物的边界。并且根据marking observations中的传感器数据将障碍物位置处的栅格cost值设为LETHAL_OBSTACLE。对于inflationLayer类，在ObstacleLayer层的基础上增加膨胀半径（inflation_radius_）的范围。对于VoxelLayer类，大体与ObstacleLayer类一样，但考虑了z轴的数据。
+
+## updateCosts函数
+将该层的cost值合并到主cospmap中，即LayeredCostmap包含的costmap层。
+
+其中initialize函数和matchSize函数分别只执行一次。updateBounds函数和updateCosts函数则会周期执行，其执行频率由map_update_frequency决定。
+
+## setUnpaddedRobotFootprint函数
+是Costmap2DROS类的一个成员函数，用于设置机器人的足迹。该函数的参数是一个有序的二维点向量，定义机器人足迹，以base_link帧为原点。向量中的第一个和最后一个点连接成最后一条线段，以闭合足迹的形状1.
+# move_base
+## nav_core
+### nav_core::BaseGlobalPlanner 
+微导航提供全局路径规划接口。所有的路径规划算法都会写成move_base节点的插件，这些插件都要继承于这个接口。
