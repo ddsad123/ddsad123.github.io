@@ -1,6 +1,6 @@
-[submodule "docs/leap-day"]
-	path = docs/leap-day
-	url = https://github.com/pages-themes/leap-day.git
-[submodule "beautiful-jekyll"]
-	path = beautiful-jekyll
-	url = https://github.com/daattali/beautiful-jekyll.git
+# [submodule "docs/leap-day"]
+# 	path = docs/leap-day
+# 	url = https://github.com/pages-themes/leap-day.git
+# [submodule "beautiful-jekyll"]
+# 	path = beautiful-jekyll
+# 	url = https://github.com/daattali/beautiful-jekyll.git
