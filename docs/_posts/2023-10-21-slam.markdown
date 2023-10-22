@@ -8,14 +8,12 @@ categories: jekyll update
 * content
 {:toc}
 
-# 如何推送到GitHub
-```
-git init 
-git add . 
-git commit -m ‘推送’
-git push
-```
-如果git鉴权失败，可能是token过期。
+# 三维空间刚体运动
+## 选择向量和欧拉角
+万向锁问题。
+## 四元数
+定义：一个实部和三个虚部。  
+q = q0 +q1i +q2j +q3k。
 
-# 实时查看更新
-`bundler exec jekyll server`
+# 李群和李代数
+群：一种集合加上一种运算的代数结构。
