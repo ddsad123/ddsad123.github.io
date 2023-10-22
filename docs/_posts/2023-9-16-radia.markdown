@@ -14,8 +14,26 @@ categories: jekyll update
 ### ros1&ros2区别
 ROS1中的costmap_2d功能包和ROS2中的基本一致。算法流程架构没有太多变化。但是ROS2中的costmap_2d功能包增加了CostmapFilter模块，可以方便实现虚拟墙和速度限制区等功能。
 ## Nav2
-Nav2是ROS导航（Navigation）软件堆栈的精神继任者，旨在寻找一种安全的方式让移动机器人从A点移动到B点。它也可以应用于其他涉及机器人导航的应用，例如跟路点跟踪。为此，Nav2将会完成动态路径规划、计算电机速度、避开障碍物和结构恢复行为。Nav2使用行为树（BT，Behavior Trees）调用模块化服务器来完成一个动作。动作可以是计算路径、控制工作（control efforts）、恢复或任何其他与导航相关的动作。这些都是通过ROS动作服务器与行为树（BT）进行通信的独立节点12.
-# 一些函数
+Nav2是ROS导航（Navigation）软件堆栈的精神继任者，旨在寻找一种安全的方式让移动机器人从A点移动到B点。它也可以应用于其他涉及机器人导航的应用，例如跟路点跟踪。为此，Nav2将会完成动态路径规划、计算电机速度、避开障碍物和结构恢复行为。Nav2使用行为树（BT，Behavior Trees）调用模块化服务器来完成一个动作。动作可以是计算路径、控制工作（control efforts）、恢复或任何其他与导航相关的动作。这些都是通过ROS动作服务器与行为树（BT）进行通信的独立节点.
+## 机器人内切圆
+机器人内切圆是指机器人足迹中的一个圆，该圆与机器人足迹的边界刚好相切。机器人内切圆的半径通常用于计算膨胀栅格的半径，以避免机器人与障碍物发生碰撞
+## 膨胀栅格
+膨胀栅格是指在机器人导航中用于避免碰撞的一种技术。在这个技术中，机器人的足迹被表示为一个圆形，该圆形与机器人的边界刚好相切。膨胀栅格是指在机器人足迹周围添加一定数量的栅格，以避免机器人与障碍物发生碰撞。这些栅格的数量由膨胀半径决定，膨胀半径是指机器人足迹内切圆的半径.
+
+
+# 一些类
+## InflationLayer
+是 RoboRTS 项目中的一个类，负责对代价地图进行膨胀。该层的目的是扩大地图中的障碍物，以避免机器人的外壳与其碰撞。
+### DistanceLookup
+该函数接受一个costmap，一个costmap中的单元格的索引和一些其他参数。该函数将单元格放入待膨胀障碍物列表中。mx和my参数分别是单元格的x和y坐标。src_x和src_y参数是障碍点膨胀开始的x和y索引。
+### ComputeCost
+函数是该类的一个成员函数。它计算给定距离单元的代价值。
+### CellDistance
+类中的一个成员函数。它的作用是计算给定距离单元的代价值。
+
+## Layer
+Layer 是 RoboRTS 项目中的一个类，负责对代价地图进行膨胀。该层的目的是扩大地图中的障碍物，以避免机器人的外壳与其碰撞。
+
 ## initialize函数
 它调用onInitialize函数，分别对各costmap层进行初始化；
 
@@ -31,8 +49,23 @@ Nav2是ROS导航（Navigation）软件堆栈的精神继任者，旨在寻找一
 其中initialize函数和matchSize函数分别只执行一次。updateBounds函数和updateCosts函数则会周期执行，其执行频率由map_update_frequency决定。
 
 ## setUnpaddedRobotFootprint函数
-是Costmap2DROS类的一个成员函数，用于设置机器人的足迹。该函数的参数是一个有序的二维点向量，定义机器人足迹，以base_link帧为原点。向量中的第一个和最后一个点连接成最后一条线段，以闭合足迹的形状1.
+是Costmap2DROS类的一个成员函数，用于设置机器人的足迹。该函数的参数是一个有序的二维点向量，定义机器人足迹，以base_link帧为原点。向量中的第一个和最后一个点连接成最后一条线段，以闭合足迹的形状.
+
+## CellData
+
+### CellData
+这个函数是 roborts_costmap 库中 costmap_2d.h 文件中的 CellData 类的一个构造函数。它接受五个参数，分别是 i, x, y, sx, 和 sy。这个构造函数用于创建一个新的 CellData 对象，并将传入的参数赋值给对象的成员变量1.
+## Costmap2D
+
+### GetIndex
+`roborts_costmap::Costmap2D::GetIndex` 函数是 `Costmap2D` 类的一个成员函数，用于将一个二维坐标转换为一维数组下标。该函数的定义可以在 `roborts_costmap/include/roborts_costmap/costmap_2d.h` 文件中找到.
+
+
 # move_base
 ## nav_core
 ### nav_core::BaseGlobalPlanner 
 微导航提供全局路径规划接口。所有的路径规划算法都会写成move_base节点的插件，这些插件都要继承于这个接口。
+
+## 一些类
+### geometry_msgs::Polygon 
+是 ROS（机器人操作系统）中的一个消息类型，用于表示多边形。它包含一个 std_msgs/Header 类型的头部信息和一个 std::vector<geometry_msgs::Point32> 类型的顶点数组。
