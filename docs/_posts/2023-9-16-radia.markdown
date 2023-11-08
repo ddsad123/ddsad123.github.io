@@ -61,9 +61,9 @@ Layer 是 RoboRTS 项目中的一个类，负责对代价地图进行膨胀。�
 `roborts_costmap::Costmap2D::GetIndex` 函数是 `Costmap2D` 类的一个成员函数，用于将一个二维坐标转换为一维数组下标。该函数的定义可以在 `roborts_costmap/include/roborts_costmap/costmap_2d.h` 文件中找到.
 
 
-# move_base
-## nav_core
-### nav_core::BaseGlobalPlanner 
+## move_base
+### nav_core
+#### nav_core::BaseGlobalPlanner 
 微导航提供全局路径规划接口。所有的路径规划算法都会写成move_base节点的插件，这些插件都要继承于这个接口。
 
 ## 一些类

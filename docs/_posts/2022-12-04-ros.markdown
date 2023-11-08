@@ -9,16 +9,7 @@ categories: jekyll update
 {:toc}
 
 # 安装ros 
-## 自动安装：
 
-```
-git clone https://github.com/RocShi/rostaller.git
-cd rostaller
-chmod +x ./run.sh
-./run.sh
-```
-
-## 手动安装：
 ### 设置区域设置
 ```
 sudo apt update && sudo apt install locales
@@ -49,10 +40,8 @@ source /opt/ros/foxy/setup.bash
 gedit ~/.bashrc
 在末尾加上：
 source ~/ros2_foxy/install/setup.bash
-安装完之后：加上自启动
-`gedit ~/.bashrc`
-小海龟：
-`sudo apt install ros-foxy-turtlesim`
+安装完之后：加上自
+        auto enemy_y = reduce_goal.pose.position.y;l ros-foxy-turtlesim`
 `ros2 run turtlesim turtlesim_node`
 `ros2 run turtlesim turtle_teleop_key`
 ` sudo apt install ~nros-foxy-rqt*`
